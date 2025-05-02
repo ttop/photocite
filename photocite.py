@@ -1,3 +1,17 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Copyright [yyyy] [Your Name or Organization]
+
 import subprocess
 import tempfile
 import sys
@@ -67,6 +81,7 @@ def generate_citation_png_from_markdown(markdown_text: str,
         # Step 2: Crop the PDF using pdfcrop
         pdfcrop_cmd = [
             "pdfcrop",
+            "--quiet",
             "--margins", "20",
             temp_pdf_path,
             cropped_pdf_path
@@ -208,7 +223,7 @@ def resize_image(filename, width, dpi):
             ["magick", filename, "-resize", str(width), "-density", str(dpi), temp_filename],
             check=True
         )
-        print(f"Resized {filename} to width {width} at {dpi} DPI: {temp_filename}")
+        # print(f"Resized {filename} to width {width} at {dpi} DPI: {temp_filename}")
         return temp_filename
     except subprocess.CalledProcessError as e:
         print(f"Error occurred while resizing: {e}")
@@ -279,9 +294,6 @@ def append_files(input_file, citation_file, output_file, quality=92):
         cmd.append(output_file)
         
         subprocess.run(cmd, check=True)
-        print(f"Appended {input_file} and {citation_file} to {output_file}")
-        if ext in [".jpg", ".jpeg"]:
-            print(f"Used JPEG quality: {quality}")
         return True
     except subprocess.CalledProcessError as e:
         print(f"Error occurred while appending: {e}")
@@ -336,7 +348,7 @@ def clean_up_files(files_to_clean):
         if file_path and os.path.exists(file_path):
             try:
                 os.remove(file_path)
-                print(f"Cleaned up temporary file: {file_path}")
+                # print(f"Cleaned up temporary file: {file_path}")
             except Exception as e:
                 print(f"Warning: Could not remove temporary file {file_path}: {e}")
 
@@ -414,7 +426,7 @@ def main():
             # Use screen resolution DPI for citation-only mode (72 DPI)
             # This is just a reasonable default since there's no source image
             dpi = 72
-            print(f"Using screen resolution DPI ({dpi}) for citation-only mode")
+            # print(f"Using screen resolution DPI ({dpi}) for citation-only mode")
             
             # Generate the citation PNG
             generate_citation_png_from_markdown(citation, citation_image, template_content, dpi)
@@ -435,11 +447,11 @@ def main():
             
             # Get the DPI of the original image
             dpi = get_image_dpi(args.image)
-            print(f"Using source image DPI: {dpi}")
+            # print(f"Using source image DPI: {dpi}")
             
             # Get the quality of the original image (for JPEGs)
             quality = get_image_quality(args.image)
-            print(f"Using source image quality: {quality}")
+            # print(f"Using source image quality: {quality}")
             
             # Set up filenames
             source_file_without_extension = os.path.splitext(args.image)[0]
