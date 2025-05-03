@@ -1,12 +1,13 @@
 # Photocite
 
-**Photocite** is a python script that chains together a few different tools to do this:
+**Photocite** is a python script append an image with citation text. I use this in [my genealogy research](https://pedigreepipeline.com) where I don't want the citation to become separated from the photo itself if the photo is distributed or otherwise moved around.
 
-[ImageMagick](https://imagemagick.org) is a command-line swiss army knife for images, it's a great tool and very fast. It even has some built-in captioning capability. I spent a bunch of time unsuccessfully trying to get this to produce the type of captions I wanted, but I didn't have any luck. I particularly had problems with mixing regular and italic text and with positioning the captions how I wanted.
+It chains together a few different command-line tools to do this:
 
-[LaTeX](https://www.latex-project.org) is a document preparation and typesetting system. With this I found I could get the consistency and formatting I wanted in the citations.
-
-[Pandoc](https://pandoc.org) is a universal document converter. I use this for converting Markdown to LaTeX.
+- [ImageMagick](https://imagemagick.org) is a command-line swiss army knife for images, it's a great tool and very fast. It even has some built-in captioning capability. I spent a bunch of time unsuccessfully trying to get this to produce the type of captions I wanted, but I didn't have any luck. I particularly had problems with mixing regular and italic text and with positioning the captions how I wanted.
+- [LaTeX](https://www.latex-project.org) is a document preparation and typesetting system. With this I found I could get the consistency and formatting I wanted in the citations.
+- [Pandoc](https://pandoc.org) is a universal document converter. I use this for converting Markdown to LaTeX.
+- PdfCrop comes with the LaTeX/TeX installation.
 
 Installing and configuring the above tools is beyond the scope of this README.
 
