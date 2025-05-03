@@ -24,7 +24,7 @@ CITATION_TEMPLATE = r'''\documentclass[12pt]{article}
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
 \usepackage{ragged2e}
-\usepackage[paperwidth=8in, margin=0.2in]{geometry} % Adjust for desired padding
+\usepackage[paperwidth=8.5in, margin=0.2in]{geometry} 
 \pagestyle{empty} % no headers or footers
 \usepackage{parskip}
 \usepackage{microtype}
