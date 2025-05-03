@@ -1,6 +1,1 @@
-*.jpg
-*.png
-*.svg
-a.md
-b.md
-
+.DS_Store

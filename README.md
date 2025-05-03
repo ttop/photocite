@@ -32,15 +32,6 @@ Photocite chains together a few different command-line tools to do this:
 
 Installing and configuring the above tools is beyond the scope of this README.
 
-The basic flow is as follows: 
-
-1. Get the dimensions and DPI of the image
-2. If the image is a JPEG, get the quality of the JPEG
-3. Read in Markdown and use Pandoc and Latex to create a high resolution PDF of the citation
-4. Crop the PDF down to just encompass the text and some padding
-5. Convert the PDF to a PNG and resize it to be smaller than the original image
-6. Use ImageMagick to append the PNG to the original image.
-
 ```
 usage: photocite.py [-h] [-co] [-t TEMPLATE] [-o OUTPUT] [-c CITE]
                     [image] [citation_text]
