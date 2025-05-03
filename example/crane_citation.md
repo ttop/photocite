@@ -1,0 +1,1 @@
+Photograph depicting Charles Irvin Crane, Rhoda Ellen (Jenkins) Crane, and possibly Hubert Crane, ca. late 1895. Original print, approx. 6 × 4.5 in.; privately held by Todd Wells, Seattle, Washington, 2025. Inscription in the cursive handwriting of Agnes Crane Wells on back reads: “Charles & Rhoda Crane (& Hubert??)”.

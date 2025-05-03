@@ -2,7 +2,26 @@
 
 **Photocite** is a python script append an image with citation text. I use this in [my genealogy research](https://pedigreepipeline.com) where I don't want the citation to become separated from the photo itself if the photo is distributed or otherwise moved around.
 
-It chains together a few different command-line tools to do this:
+For example, if you have an image
+
+<!-- ![image without citation](example/crane.jpg) -->
+<a href="example/crane.jpg">
+  <img src="example/crane.jpg" alt="image without citation" width="400">
+</a>
+
+```
+$ photocite crane.jpg -c crane_citation.md -o crane_cite.jpg
+Created 'crane_cite.jpg' using citation text from file: crane_citation.md
+$ 
+```
+
+Results in 
+
+<a href="example/crane_cite.jpg">
+  <img src="example/crane_cite.jpg" alt="image with citation" width="400">
+</a>
+
+Photocite chains together a few different command-line tools to do this:
 
 - [ImageMagick](https://imagemagick.org) is a command-line swiss army knife for images, it's a great tool and very fast. It even has some built-in captioning capability. I spent a bunch of time unsuccessfully trying to get this to produce the type of captions I wanted, but I didn't have any luck. I particularly had problems with mixing regular and italic text and with positioning the captions how I wanted.
 - [LaTeX](https://www.latex-project.org) is a document preparation and typesetting system. With this I found I could get the consistency and formatting I wanted in the citations.
@@ -57,5 +76,7 @@ Usage examples:
 4. Using piped input: cat citation.md | photocite.py image.jpg
    Or: cat citation.md | photocite.py --citation-only
 ```
+
+
 
 This project is licensed under the Apache License 2.0 – see the [LICENSE](LICENSE) file for details.
