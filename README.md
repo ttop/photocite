@@ -1,13 +1,15 @@
 # Photocite
 
-**Photocite** is a python script append an image with citation text. I use this in [my genealogy research](https://pedigreepipeline.com) where I don't want the citation to become separated from the photo itself if the photo is distributed or otherwise moved around.
+**Photocite** is a python script to append an image with citation text. I use this in [my genealogy research](https://pedigreepipeline.com) where I don't want the citation to become separated from the photo itself if the photo is distributed or otherwise moved around.
 
-For example, if you have an image
+For example, if you have an image:
 
 <!-- ![image without citation](example/crane.jpg) -->
 <a href="example/crane.jpg">
   <img src="example/crane.jpg" alt="image without citation" width="400">
 </a>
+
+then executing: 
 
 ```
 $ photocite crane.jpg -c crane_citation.md -o crane_cite.jpg
@@ -15,7 +17,7 @@ Created 'crane_cite.jpg' using citation text from file: crane_citation.md
 $ 
 ```
 
-Results in 
+results in the a new image:
 
 <a href="example/crane_cite.jpg">
   <img src="example/crane_cite.jpg" alt="image with citation" width="400">
