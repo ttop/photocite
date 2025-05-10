@@ -24,7 +24,7 @@ CITATION_TEMPLATE = r'''\documentclass[12pt]{article}
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
 \usepackage{ragged2e}
-\usepackage[paperwidth=8.5in, margin=0.2in]{geometry} 
+\usepackage[paperwidth=8.5in, margin=0.2in]{geometry}
 \pagestyle{empty} % no headers or footers
 \usepackage{parskip}
 \usepackage{microtype}
@@ -33,6 +33,7 @@ CITATION_TEMPLATE = r'''\documentclass[12pt]{article}
 \RaggedRight
 \hyphenpenalty=10000
 \exhyphenpenalty=10000
+\emergencystretch=3em
 $body$
 \end{document}
 '''
@@ -41,7 +42,7 @@ def generate_citation_png_from_markdown(markdown_text: str,
                                         output_png: str = "citation_pandoc.png",
                                         pandoc_template_content: str = CITATION_TEMPLATE,
                                         dpi: int = 300,
-                                        verbose: bool = False):
+                                        debug: bool = False):
     """
     Converts a markdown string into a cropped, high-resolution PNG image using
     pandoc → pdfcrop → magick.
@@ -51,7 +52,7 @@ def generate_citation_png_from_markdown(markdown_text: str,
         output_png (str): Path to the final PNG output.
         pandoc_template_content (str): Content of the LaTeX template.
         dpi (int): Resolution in dots per inch for the output image.
-        verbose (bool): If True, outputs the temporary filenames used during processing.
+        debug (bool): If True, outputs the temporary filenames used during processing.
     """
     temp_pdf_path = None
     cropped_pdf_path = None
@@ -70,7 +71,7 @@ def generate_citation_png_from_markdown(markdown_text: str,
             template_file.write(pandoc_template_content.encode('utf-8'))
             template_file.flush()
 
-        if verbose:
+        if debug:
             print(f"Temporary LaTeX template file: {template_file_path}")
             print(f"Temporary PDF file: {temp_pdf_path}")
             print(f"Temporary cropped PDF file: {cropped_pdf_path}")
@@ -109,12 +110,13 @@ def generate_citation_png_from_markdown(markdown_text: str,
         return output_png
     finally:
         # Clean up intermediate files
-        for path in [temp_pdf_path, cropped_pdf_path, template_file_path]:
-            if path and os.path.exists(path):
-                try:
-                    os.remove(path)
-                except Exception as e:
-                    print(f"Warning: Could not remove temporary file {path}: {e}")
+        if not debug:
+            for path in [temp_pdf_path, cropped_pdf_path, template_file_path]:
+                if path and os.path.exists(path):
+                    try:
+                        os.remove(path)
+                    except Exception as e:
+                        print(f"Warning: Could not remove temporary file {path}: {e}")
 
 def get_image_dimensions(filename):
     """
@@ -513,6 +515,7 @@ def main():
     finally:
         # Clean up all temporary files, even if an error occurred
         if not args.debug:
+            print ("Cleaning up temporary files...")
             clean_up_files(temp_files)
 
 if __name__ == "__main__":
