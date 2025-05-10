@@ -331,6 +331,8 @@ def parse_arguments():
                        help='Path to a custom LaTeX template for pandoc (optional)')
     parser.add_argument('-o', '--output', help='Custom output filename (optional)')
     parser.add_argument('-c', '--cite', help='Read citation text from this file (markdown format)')
+    parser.add_argument('-d', '--debug', action='store_true',
+                       help='Enable debug mode for verbose output')
     
     # Add a positional argument that can be either the image file or the citation text
     # depending on whether we're in citation-only mode
@@ -361,12 +363,18 @@ def clean_up_files(files_to_clean):
 
 def main():
     args = parse_arguments()
+
+    # Enable verbose output if debug mode is on
+    if args.debug:
+        print("Debug mode enabled. Verbose output will be shown.")
+        print(f"Arguments: {args}")
     
     citation = None
     citation_source = None
     citation_file = None
     
     # First, determine the citation text source
+
     if args.cite:
         # Cite flag has highest priority
         if not os.path.exists(args.cite):
@@ -436,7 +444,7 @@ def main():
             # print(f"Using screen resolution DPI ({dpi}) for citation-only mode")
             
             # Generate the citation PNG
-            generate_citation_png_from_markdown(citation, citation_image, template_content, dpi)
+            generate_citation_png_from_markdown(citation, citation_image, template_content, dpi, args.debug)
             print(f"Citation only mode: Generated citation file at '{citation_image}' using text from {citation_source}")
             
         else:
@@ -467,7 +475,7 @@ def main():
             temp_files.append(citation_image)
             
             # Generate the citation PNG with the original image's DPI
-            generate_citation_png_from_markdown(citation, citation_image, template_content, dpi)
+            generate_citation_png_from_markdown(citation, citation_image, template_content, dpi, args.debug)
 
             # Resize and center the citation
             is_landscape = original_width > original_height
@@ -504,7 +512,8 @@ def main():
 
     finally:
         # Clean up all temporary files, even if an error occurred
-        clean_up_files(temp_files)
+        if not args.debug:
+            clean_up_files(temp_files)
 
 if __name__ == "__main__":
     main()
