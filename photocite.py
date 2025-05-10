@@ -515,7 +515,6 @@ def main():
     finally:
         # Clean up all temporary files, even if an error occurred
         if not args.debug:
-            print ("Cleaning up temporary files...")
             clean_up_files(temp_files)
 
 if __name__ == "__main__":
