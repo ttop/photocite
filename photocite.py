@@ -327,7 +327,7 @@ def parse_arguments():
     parser.add_argument('-co', '--citation-only', action='store_true',
                        help='Only generate the citation file without appending to the original image')
     
-    parser.add_argument('-t', '--template', 
+    parser.add_argument('-l', '--latex', 
                        help='Path to a custom LaTeX template for pandoc (optional)')
     parser.add_argument('-o', '--output', help='Custom output filename (optional)')
     parser.add_argument('-c', '--cite', help='Read citation text from this file (markdown format)')
@@ -408,8 +408,8 @@ def main():
     
     # Handle template option
     template_content = CITATION_TEMPLATE
-    if args.template and os.path.exists(args.template):
-        with open(args.template, 'r') as template_file:
+    if args.latex and os.path.exists(args.latex):
+        with open(args.latex, 'r') as template_file:
             template_content = template_file.read()
     
     # Initialize temporary files list for cleanup
