@@ -40,7 +40,8 @@ $body$
 def generate_citation_png_from_markdown(markdown_text: str,
                                         output_png: str = "citation_pandoc.png",
                                         pandoc_template_content: str = CITATION_TEMPLATE,
-                                        dpi: int = 300):
+                                        dpi: int = 300,
+                                        verbose: bool = False):
     """
     Converts a markdown string into a cropped, high-resolution PNG image using
     pandoc → pdfcrop → magick.
@@ -50,6 +51,7 @@ def generate_citation_png_from_markdown(markdown_text: str,
         output_png (str): Path to the final PNG output.
         pandoc_template_content (str): Content of the LaTeX template.
         dpi (int): Resolution in dots per inch for the output image.
+        verbose (bool): If True, outputs the temporary filenames used during processing.
     """
     temp_pdf_path = None
     cropped_pdf_path = None
@@ -67,6 +69,11 @@ def generate_citation_png_from_markdown(markdown_text: str,
             template_file_path = template_file.name
             template_file.write(pandoc_template_content.encode('utf-8'))
             template_file.flush()
+
+        if verbose:
+            print(f"Temporary LaTeX template file: {template_file_path}")
+            print(f"Temporary PDF file: {temp_pdf_path}")
+            print(f"Temporary cropped PDF file: {cropped_pdf_path}")
 
         # Step 1: Generate the PDF from markdown using Pandoc
         pandoc_cmd = [
