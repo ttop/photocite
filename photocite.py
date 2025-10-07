@@ -363,6 +363,20 @@ def clean_up_files(files_to_clean):
             except Exception as e:
                 print(f"Warning: Could not remove temporary file {file_path}: {e}")
 
+def width_factor_from_aspect_ratio(ar: float) -> float:
+    # Portrait-ish (<=1): 0.80 of width
+    # Mild landscape (~1.3): ~0.86
+    # Wide (>=2): clamp near 0.95–0.98 of width
+    # Linear ramp; tweak endpoints to taste.
+    lo_ar, hi_ar = 1.0, 2.0
+    lo_f,  hi_f  = 0.80, 0.95
+    if ar <= lo_ar:
+        return lo_f
+    if ar >= hi_ar:
+        return hi_f
+    t = (ar - lo_ar) / (hi_ar - lo_ar)
+    return lo_f + t * (hi_f - lo_f)
+
 def main():
     args = parse_arguments()
 
@@ -476,15 +490,12 @@ def main():
             citation_image = source_file_without_extension + " citation.png"
             temp_files.append(citation_image)
             
-            # Generate the citation PNG with the original image's DPI
-            generate_citation_png_from_markdown(citation, citation_image, template_content, dpi, args.debug)
+            # Generate citation at a high dpi in order to prevent blurriness when resizing
+            generate_citation_png_from_markdown(citation, citation_image, template_content, 600, args.debug)
 
-            # Resize and center the citation
-            is_landscape = original_width > original_height
-            if is_landscape:
-                citation_image_width = int(original_width * 0.50)
-            else:
-                citation_image_width = int(original_width * 0.80)
+            aspect_ratio = original_width / max(1, original_height)
+            factor = width_factor_from_aspect_ratio(aspect_ratio)
+            citation_image_width = int(original_width * factor)
 
             resized_citation_file = resize_image(citation_image, citation_image_width, dpi)
             if not resized_citation_file:
