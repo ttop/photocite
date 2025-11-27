@@ -611,7 +611,7 @@ def main():
             print("Error: Could not determine image dimensions.")
             sys.exit(1)
         height_to_width = original_height / max(1, original_width)
-        is_very_tall = height_to_width >= 3.0
+        is_very_tall = height_to_width >= 2.0
 
         base_template_content = CITATION_TEMPLATE
         if args.latex:
